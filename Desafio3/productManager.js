@@ -1,6 +1,6 @@
-const fs = require("fs");
+import fs from "fs";
 
-class productManager {
+export default class productManager {
   #id = 0;
   constructor(path) {
     this.path = path;
@@ -82,8 +82,10 @@ class productManager {
         productToUpdate.id = id;
         products[index] = productToUpdate;
         await fs.promises.writeFile(this.path, JSON.stringify(products));
-      } catch (err) {console.log("No se puede actualizar el producto")}
-    } else console.log("No se encuentra el id del prodcuto a actualizar")
+      } catch (err) {
+        console.log("No se puede actualizar el producto");
+      }
+    } else console.log("No se encuentra el id del prodcuto a actualizar");
   }
 
   async deleteProduct(id) {
@@ -146,6 +148,4 @@ const test = async () => {
   }
 };
 
-
 test();
-
