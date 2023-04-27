@@ -129,23 +129,23 @@ const test = async () => {
       10
     );
 
-    console.log(await pm.getProductById(1));
+    // console.log(await pm.getProductById(1));
 
-    await pm.updateProduct(1, {
-      title: "Mesa grande",
-      description: "Mesa de algarrobo",
-      price: 23000,
-      thumbnail: "url",
-      code: 12325,
-      stock: 4,
-    });
+    // await pm.updateProduct(1, {
+    //   title: "Mesa grande",
+    //   description: "Mesa de algarrobo",
+    //   price: 23000,
+    //   thumbnail: "url",
+    //   code: 12325,
+    //   stock: 4,
+    // });
 
-    await pm.deleteProduct(2);
+    // await pm.deleteProduct(2);
 
-    console.log(await pm.getProducts());
+    // console.log(await pm.getProducts());
   } catch (err) {
     console.log("Salio mal el test", err);
   }
 };
 
-test();
+// test();

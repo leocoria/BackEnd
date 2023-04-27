@@ -3,7 +3,7 @@ import productManager from "../productManager.js";
 
 const app = express();
 
-const prodManager = new productManager("../productManager.json");
+const prodManager = new productManager("./productManager.json");
 
 app.use(express.urlencoded({ extended: true }));
 
