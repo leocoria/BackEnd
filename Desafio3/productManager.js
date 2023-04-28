@@ -109,43 +109,65 @@ export default class productManager {
 
 const pm = new productManager("./productManager.json");
 
+/**
+ * Función de prueba que no es utilizada
+ */
 const test = async () => {
   try {
     await pm.addProduct(
-      "Mesa",
-      "Mesa ratona de living",
-      5800,
-      "https://d3ugyf2ht6aenh.cloudfront.net/stores/933/006/products/mesa-ratona-de-petiribi-rectang1-cb92fa9399735d29c916403795508628-640-0.jpg",
-      12323,
-      5
+      "Sillon",
+      "Sillon 2 cuerpos de pana",
+      36000,
+      "https://http2.mlstatic.com/D_NQ_NP_819626-MLA51337975929_082022-O.webp",
+      12327,
+      10
     );
 
     await pm.addProduct(
       "Silla",
-      "Silla de comedor",
-      4300,
+      "Silla de algarrobo",
+      6000,
       "https://i.pinimg.com/236x/c6/ca/b7/c6cab724ffd7d7279a4e05b247f44755.jpg",
-      12324,
-      10
+      12328,
+      15
     );
 
-    // console.log(await pm.getProductById(1));
+    await pm.addProduct(
+      "Mesa",
+      "Mesa de vidrio",
+      15800,
+      "https://d3ugyf2ht6aenh.cloudfront.net/stores/933/006/products/mesa-ratona-de-petiribi-rectang1-cb92fa9399735d29c916403795508628-640-0.jpg",
+      12323,
+      8
+    );
 
-    // await pm.updateProduct(1, {
-    //   title: "Mesa grande",
-    //   description: "Mesa de algarrobo",
-    //   price: 23000,
-    //   thumbnail: "url",
-    //   code: 12325,
-    //   stock: 4,
-    // });
+    await pm.addProduct(
+      "Rack de TV",
+      "Rack de TV grande",
+      24500,
+      "https://i.pinimg.com/236x/c6/ca/b7/c6cab724ffd7d7279a4e05b247f44755.jpg",
+      12333,
+      4
+    );
 
-    // await pm.deleteProduct(2);
+    await pm.addProduct(
+      "TV",
+      "TV SAMSUNG 43 pulgadas",
+      95000,
+      "https://d3ugyf2ht6aenh.cloudfront.net/stores/933/006/products/mesa-ratona-de-petiribi-rectang1-cb92fa9399735d29c916403795508628-640-0.jpg",
+      12334,
+      13
+    );
 
-    // console.log(await pm.getProducts());
+    await pm.addProduct(
+      "Sofa",
+      "Sofa Cama",
+      44000,
+      "https://i.pinimg.com/236x/c6/ca/b7/c6cab724ffd7d7279a4e05b247f44755.jpg",
+      12335,
+      3
+    );
   } catch (err) {
     console.log("Salio mal el test", err);
   }
 };
-
-// test();

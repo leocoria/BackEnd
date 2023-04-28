@@ -9,8 +9,23 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/products", async (req, res) => {
   try {
+    let limit = req.query.limit;
     let products = await prodManager.getProducts();
-    res.send(products);
+    if (limit && limit !== 0 && limit < products.length) {
+      let limitedProducts = products.slice(0, limit);
+      res.send(limitedProducts);
+    } else res.send(products);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+app.get("/products/:pid", async (req, res) => {
+  try {
+    const pid = parseInt(req.params.pid);
+    const products = await prodManager.getProducts();
+    const producto = products.find((elemento) => elemento.id === pid);
+    producto ? res.send(producto) : res.status(404).send({ err });
   } catch (err) {
     res.send(err);
   }
