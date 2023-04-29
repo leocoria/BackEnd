@@ -25,7 +25,7 @@ app.get("/products/:pid", async (req, res) => {
     const pid = parseInt(req.params.pid);
     const products = await prodManager.getProducts();
     const producto = products.find((elemento) => elemento.id === pid);
-    producto ? res.send(producto) : res.status(404).send({ err });
+    producto ? res.send(producto) : res.send({ error: "No existe el producto con el id proporcionado" });
   } catch (err) {
     res.send(err);
   }
