@@ -19,6 +19,9 @@ cartsRouter.post('/', async (req,res)=>{
   } catch(err){
     console.log("No puedo agregar el carrito")
   }
+})
+
+cartsRouter.post('/:cid/product/:pid', async (req,res)=>{
   
 })
 
