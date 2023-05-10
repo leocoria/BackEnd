@@ -29,7 +29,19 @@ export default class cartManager {
     }
   }
 
-  async addCart(products) {}
+  async addCart(cartProducts) {
+    const cart={
+      cartProducts
+    }
+    cart.id= await this.#getID()
+    try{
+      const actualCarts= await this.#getCarts()
+      actualCarts.push(cart)
+      await fs.promises.writeFile(this.path,JSON.stringify(actualCarts))
+    } catch(err){
+      console.log("No puedo agregar el carrito")
+    }
+  }
 
   async addProductToCart(cid, pid) {}
 

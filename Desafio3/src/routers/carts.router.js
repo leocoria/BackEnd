@@ -2,15 +2,24 @@ import { Router } from "express";
 
 
 const cartsRouter=Router();
+const cartManager = new cartManager();
 
-cartsRouter.get('/', (req,res)=>{
-  res.send(carts)
+cartsRouter.get('/:cid', async (req,res)=>{
+  try{
+    res.send(cart)
+  } catch(err){}
+  
 })
 
-cartsRouter.post('/', (req,res)=>{
-  const cart=req.body;
-  carts.push(cart)
-  res.status(201).send(cart)
+cartsRouter.post('/', async (req,res)=>{
+  const cartProducts=req.body;
+  try{
+    await cartManager.addCart(cartProducts)
+    res.status(201).send(cart)
+  } catch(err){
+    console.log("No puedo agregar el carrito")
+  }
+  
 })
 
 export {cartsRouter}

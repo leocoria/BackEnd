@@ -3,6 +3,7 @@ import productManager from "../../productManager";
 
 
 const productsRouter=Router();
+const prodManager = new productManager("./products.json");
 
 productsRouter.get('/', async (req,res)=>{
   try {
@@ -20,11 +21,28 @@ productsRouter.get('/', async (req,res)=>{
 productsRouter.post('/', async (req,res)=>{
   try{
     const product=req.body;
-    await prodManager.addProduct(product.title, product.description, product.price, product.thumbnail, product.code, product.stock)
+    await prodManager.addProduct(product.title, product.description, product.code, product.price, product.status, product.stock, product.category, product.thumbnails)
     res.status(201).send(product)
   } catch(err){
     res.send(err)
   }
+})
+
+productsRouter.put('/:pid', async (req, res)=>{
+  try{
+    const productToUpdate=req.body;
+    await prodManager.updateProduct(pid, productToUpdate)
+  } catch(err){
+    res.send(err)
+  }
+})
+
+  productsRouter.delete('/:pid', async (req,res)=>{
+    try{
+      await prodManager.deleteProduct(pid)
+    } catch(err){
+      res.send(err)
+    }
  
 })
 

@@ -29,14 +29,16 @@ export default class productManager {
     }
   }
 
-  async addProduct(title, description, price, thumbnail, code, stock) {
+  async addProduct(title, description, code, price, status, stock, category, thumbnails) {
     const product = {
       title,
       description,
-      price,
-      thumbnail,
       code,
+      price,
+      status,
       stock,
+      category,
+      thumbnails
     };
     const campos = Object.values(product);
     let campoVacio = false;
