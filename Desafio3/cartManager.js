@@ -20,30 +20,49 @@ export default class cartManager {
 
   async getCartProducts(cid) {
     const carts = await this.#getCarts();
-    const found = carts.find((cart) => cart.id === cid);
-    const notFound = "No se encuentra el producto";
+    const foundCart = carts.find((cart) => cart.id === cid);
+    const notFound = "No se encuentra el carrito";
     if (found) {
-      return found;
+      return foundCart.products;
     } else {
       return notFound;
     }
   }
 
   async addCart(cartProducts) {
-    const cart={
-      cartProducts
-    }
-    cart.id= await this.#getID()
-    try{
-      const actualCarts= await this.#getCarts()
-      actualCarts.push(cart)
-      await fs.promises.writeFile(this.path,JSON.stringify(actualCarts))
-    } catch(err){
-      console.log("No puedo agregar el carrito")
+    const cart = {
+      cartProducts,
+    };
+    cart.id = await this.#getID();
+    try {
+      const actualCarts = await this.#getCarts();
+      actualCarts.push(cart);
+      await fs.promises.writeFile(this.path, JSON.stringify(actualCarts));
+    } catch (err) {
+      console.log("No puedo agregar el carrito");
     }
   }
 
-  async addProductToCart(cid, pid) {}
+  async addProductToCart(cid, pid) {
+    try {
+      const actualCarts = await this.#getCarts();
+      const foundCart = actualCarts.find((cart) => cart.id === cid);
+      if (foundCart) {
+        const foundProduct = foundCart.products.find(
+          (product) => product.id === pid
+        );
+        if (foundProduct) {
+          foundProduct.quantity++;
+        } else {
+          newProduct = { id: pid, quantity: 1 };
+          foundCart.products.push(newProduct);
+        }
+      }
+      console.log("No encuentro el carrito con ese id");
+    } catch (err) {
+      console.log("No puedo agregar el prodcuto al carrito");
+    }
+  }
 
   async #getID() {
     this.#id++;
