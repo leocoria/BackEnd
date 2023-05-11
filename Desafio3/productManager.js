@@ -66,10 +66,15 @@ export default class productManager {
         }
       });
       if (!verifiedCode) {
-        product.id = await this.#getID();
-        console.log(product.id)
         try {
+          let id = 0;
           const actualProducts = await this.getProducts();
+          actualProducts.forEach((elemento) => {
+            if (elemento.id > id) {
+              id = elemento.id;
+            }
+          });
+          product.id = id + 1;
           actualProducts.push(product);
           await fs.promises.writeFile(
             this.path,
@@ -114,8 +119,7 @@ export default class productManager {
     }
   }
   async #getID() {
-    this.#id++;
-    console.log(this.#id)
+    this.id++;
     return this.#id;
   }
 }
