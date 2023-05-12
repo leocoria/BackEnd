@@ -31,7 +31,6 @@ productsRouter.post("/", async (req, res) => {
       product.category,
       product.thumbnails
     );
-    res.status(201).send(product);
   } catch (err) {
     res.send(err);
   }

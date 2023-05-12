@@ -1,7 +1,6 @@
 import fs from "fs";
 
 export default class productManager {
-  #id = 0;
   constructor(path) {
     this.path = path;
     if (!fs.existsSync(this.path)) {
@@ -67,21 +66,16 @@ export default class productManager {
       });
       if (!verifiedCode) {
         try {
-          let id = 0;
           const actualProducts = await this.getProducts();
-          actualProducts.forEach((elemento) => {
-            if (elemento.id > id) {
-              id = elemento.id;
-            }
-          });
-          product.id = id + 1;
+          product.id = await this.#getID(actualProducts);
           actualProducts.push(product);
           await fs.promises.writeFile(
             this.path,
             JSON.stringify(actualProducts)
           );
+          res.status(201).send(product);
         } catch (err) {
-          console.log("No puedo agregar productos");
+          console.log("No puedo agregar productos", err);
         }
       } else {
         console.log("El código ya existe");
@@ -118,8 +112,13 @@ export default class productManager {
       console.log("No se puede eliminar el producto");
     }
   }
-  async #getID() {
-    this.id++;
-    return this.#id;
+  async #getID(actualProducts) {
+    let id = 0;
+    actualProducts.forEach((elemento) => {
+      if (elemento.id > id) {
+        id = elemento.id;
+      }
+    });
+    return id + 1;
   }
 }
