@@ -20,6 +20,7 @@ export default class productManager {
   async getProductById(id) {
     const products = await this.getProducts();
     const found = products.find((producto) => producto.id === id);
+    console.log(found)
     const notFound = "No se encuentra el producto";
     if (found) {
       return found;
@@ -88,15 +89,19 @@ export default class productManager {
   async updateProduct(id, productToUpdate) {
     const products = await this.getProducts();
     const index = products.findIndex((producto) => producto.id === id);
+    //Me falta chequear el codigo de producto y que esten todos los campos
     if (index !== -1) {
       try {
         productToUpdate.id = id;
         products[index] = productToUpdate;
         await fs.promises.writeFile(this.path, JSON.stringify(products));
+        return productToUpdate;
       } catch (err) {
         console.log("No se puede actualizar el producto");
       }
-    } else console.log("No se encuentra el id del prodcuto a actualizar");
+    } else {
+  throw("No se encuentra el id del producto a actualizar", err)
+  }
   }
 
   async deleteProduct(id) {

@@ -8,7 +8,6 @@ productsRouter.get("/", async (req, res) => {
   try {
     let limit = req.query.limit;
     let products = await prodManager.getProducts();
-    console.log(products);
     if (limit && limit !== 0 && limit < products.length) {
       let limitedProducts = products.slice(0, limit);
       res.send(limitedProducts);
@@ -36,10 +35,23 @@ productsRouter.post("/", async (req, res) => {
   }
 });
 
+productsRouter.get("/:pid", async (req,res)=>{
+try{
+const pid=parseInt(req.params.pid);
+const product= await prodManager.getProductById(pid);
+res.send(product);
+}catch(err){
+  console.log(err)
+}
+})
+
 productsRouter.put("/:pid", async (req, res) => {
   try {
+    const pid=parseInt(req.params.pid);
     const productToUpdate = req.body;
-    await prodManager.updateProduct(pid, productToUpdate);
+    const productUpdated= await prodManager.updateProduct(pid, productToUpdate);
+    console.log(productUpdated)
+    res.status(201).send(productUpdated)
   } catch (err) {
     res.send(err);
   }
@@ -47,6 +59,7 @@ productsRouter.put("/:pid", async (req, res) => {
 
 productsRouter.delete("/:pid", async (req, res) => {
   try {
+    const pid=req.params.pid;
     await prodManager.deleteProduct(pid);
   } catch (err) {
     res.send(err);
