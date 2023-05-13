@@ -1,11 +1,12 @@
 import { Router } from "express";
-import cartManager from "../../cartManager.js";
+import cartManager from "../models/cartManager.js";
 
 const cartsRouter = Router();
 const cm = new cartManager();
 
 cartsRouter.get("/:cid", async (req, res) => {
   try {
+    const cid=parseInt(req.params.cid);
     const cartProducts = await cm.getCartProducts(cid);
     res.send(cartProducts);
   } catch (err) {
@@ -14,18 +15,19 @@ cartsRouter.get("/:cid", async (req, res) => {
 });
 
 cartsRouter.post("/", async (req, res) => {
-  const cartProducts = req.body;
   try {
-    await cm.addCart(cartProducts);
-    res.status(201).send(cart);
+    const cart= await cm.addCart();
+    res.status(201).send(cart)
   } catch (err) {
-    console.log("No puedo agregar el carrito");
+    res.status(500).send("Error al agregar el carrito")
   }
 });
 
-cartsRouter.post("/:cid/product/:pid", async (req, res) => {
+cartsRouter.post("/:cid/products/:pid", async (req, res) => {
   try {
-    await cm.addProductToCart(cid, pid);
+    const cid=parseInt(req.params.cid);
+    const pid=parseInt(req.params.pid);
+    const cart= await cm.addProductToCart(cid, pid);
     res.status(201).send(cart);
   } catch (err) {
     console.log("No puedo agregar el producto al carrito", err);

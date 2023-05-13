@@ -22,50 +22,69 @@ export default class cartManager {
     const carts = await this.#getCarts();
     const foundCart = carts.find((cart) => cart.id === cid);
     const notFound = "No se encuentra el carrito";
-    if (found) {
-      return foundCart.products;
+    if (foundCart) {
+      return foundCart.cartProducts;
     } else {
       return notFound;
     }
   }
 
-  async addCart(cartProducts) {
+  async addCart() {
+    let cartProducts=[];
     const cart = {
       cartProducts,
     };
-    cart.id = await this.#getID();
     try {
       const actualCarts = await this.#getCarts();
+      console.log(actualCarts)
+      cart.id = await this.#getID(actualCarts);
       actualCarts.push(cart);
       await fs.promises.writeFile(this.path, JSON.stringify(actualCarts));
+      return cart
     } catch (err) {
-      console.log("No puedo agregar el carrito");
+      console.log("No puedo agregar el carrito", err);
+      throw err;
     }
   }
 
   async addProductToCart(cid, pid) {
     try {
       const actualCarts = await this.#getCarts();
-      const foundCart = actualCarts.find((cart) => cart.id === cid);
-      if (foundCart) {
-        const foundProduct = foundCart.products.find(
+      const cartIndex = actualCarts.findIndex((cart) => cart.id === cid);
+      if (cartIndex!==-1) {
+        const foundCart=actualCarts[cartIndex];
+        const foundProduct = foundCart.cartProducts.find(
           (product) => product.id === pid
         );
         if (foundProduct) {
           foundProduct.quantity++;
+          actualCarts[cartIndex]=foundCart;
+          console.log(actualCarts)
+          await fs.promises.writeFile(this.path, JSON.stringify(actualCarts));
+          return foundCart;
         } else {
-          newProduct = { id: pid, quantity: 1 };
-          foundCart.products.push(newProduct);
+
+          const newProduct = { "id": pid, "quantity": 1 };
+          foundCart.cartProducts.push(newProduct);
+          actualCarts[cartIndex]=foundCart;
+          console.log(actualCarts)
+          await fs.promises.writeFile(this.path, JSON.stringify(actualCarts));
+          return foundCart;
         }
       }
       console.log("No encuentro el carrito con ese id");
     } catch (err) {
-      console.log("No puedo agregar el prodcuto al carrito");
+      console.log("No puedo agregar el producto al carrito");
     }
   }
 
-  async #getID() {
-    this.#id++;
-    return this.#id;
+  async #getID(actualCarts) {
+    let id = 0;
+    actualCarts.forEach((elemento) => {
+      if (elemento.id > id) {
+        id = elemento.id;
+      }
+    });
+    return id + 1;
   }
 }
