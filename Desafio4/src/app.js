@@ -1,5 +1,5 @@
 import express from "express";
-import handlerbars from "express-handlebars";
+import { engine } from "express-handlebars";
 import { Server } from "socket.io";
 import { productsRouter } from "./routers/products.router.js";
 import { cartsRouter } from "./routers/carts.router.js";
@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.engine("handlebars", handlerbars.engine());
+app.engine("handlebars", engine());
 app.set("views", "views/");
 app.set("view engine", "handlebars");
 
