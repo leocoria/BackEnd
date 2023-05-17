@@ -20,7 +20,7 @@ export default class productManager {
   async getProductById(id) {
     const products = await this.getProducts();
     const found = products.find((producto) => producto.id === id);
-    console.log(found)
+    console.log(found);
     const notFound = "No se encuentra el producto";
     if (found) {
       return found;
@@ -100,8 +100,8 @@ export default class productManager {
         console.log("No se puede actualizar el producto");
       }
     } else {
-  throw("No se encuentra el id del producto a actualizar", err)
-  }
+      throw ("No se encuentra el id del producto a actualizar", err);
+    }
   }
 
   async deleteProduct(id) {
@@ -117,6 +117,7 @@ export default class productManager {
       console.log("No se puede eliminar el producto");
     }
   }
+
   async #getID(actualProducts) {
     let id = 0;
     actualProducts.forEach((elemento) => {
