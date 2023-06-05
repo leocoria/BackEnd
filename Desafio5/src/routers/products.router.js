@@ -24,14 +24,22 @@ productsRouter.post("/", async (req, res) => {
 
 productsRouter.put("/:pid", async (req, res) => {
   const pid = req.params.pid;
-  const productToUpdate = req.body;
   try {
-    const updatedProduct = await productsService.updateProduct(
-      pid,
-      productToUpdate
-    );
+    const updatedProduct = await productsService.updateProduct(pid, req.body);
     res.status(201).send(updatedProduct);
   } catch (err) {
     res.status(500).send({ err });
   }
 });
+
+productsRouter.delete("/:pid", async (req, res) => {
+  const pid = req.params.pid;
+  try {
+    await productsService.deleteProduct(pid);
+    res.sendStatus(204);
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
+export default productsRouter;
