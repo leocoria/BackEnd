@@ -9,9 +9,11 @@ class CartsService {
     return await this.model.create();
   }
 
-  async addProductToCart() {}
+  async getCart(cid) {
+    return await this.model.findOne({ _id: cid });
+  }
 
-  async;
+  async addProductToCart(cid, pid) {}
 }
 
-export const CartService = new CartsService();
+export const cartService = new CartsService();

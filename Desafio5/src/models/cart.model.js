@@ -8,7 +8,7 @@ export const cartSchema = new mongoose.Schema({
     default: [],
     quantity: {
       type: Number,
-      required: true,
+      required: false,
     },
   },
 });
