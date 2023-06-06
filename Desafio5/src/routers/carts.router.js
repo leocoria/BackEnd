@@ -32,3 +32,5 @@ cartsRouter.post("/:cid/products/:pid", async (req, res) => {
     res.status(500).send({ err });
   }
 });
+
+export default cartsRouter;
